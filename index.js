@@ -31,12 +31,33 @@
     app.use(methodOverride('_method'));
        
 
-    // route to view all tide gauges
-    app.get('/tgs', async (req, res) => {
-        const tgs = await TideGauge.find({});
-        console.log(tgs);
+    // main page
+    app.get('/index', (req, res) => {
+        res.render('index')
     })
 
+    // route to view/filter tide gauges
+    app.get('/twcr', async (req, res) => {
+
+        const { country } = req.query;
+        console.log(country);
+
+        // look up country name in tide gauge string
+        const regex = new RegExp(country, 'i'); // i for case insensitive
+
+        const tgs = await TideGauge.find({ name: {$regex: regex}});
+        
+        console.log(tgs);
+
+        res.render('allTGS', { tgs, country });
+    })
+
+    // serve form to filter tide gauges per country
+    app.get('/show', (req, res) => {
+        res.render('show');
+
+        // what if I await the form results here?
+    })
 
     app.listen(4000, () => {
         console.log("app is listening on port 4000");
