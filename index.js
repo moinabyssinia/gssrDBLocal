@@ -6,6 +6,7 @@
    const path = require('path');
    const mongoose = require('mongoose');
    
+
    // use this to override post with put
    const methodOverride = require('method-override');
    
@@ -27,13 +28,15 @@
 
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'ejs');
+
     app.use(express.urlencoded({extended : true})) // middleware to access post request
     app.use(methodOverride('_method'));
+    app.use(express.static("public")); // to locate css and other files
        
 
     // main page
-    app.get('/index', (req, res) => {
-        res.render('index')
+    app.get('/home', (req, res) => {
+        res.render('home')
     })
 
     // route to view/filter tide gauges
