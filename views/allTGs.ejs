@@ -7,11 +7,17 @@
     <title>Tide Gauges</title>
 </head>
 <body>
+    <% if (country === undefined) { %> 
+        <% country = "ALL" %> 
+    <% } %> 
+
     <h1> <%= country.toUpperCase() %>  Tide Gauges</h1>
     
+    <h3> <%= tgs.length %> tide gauges found  </h3>
+
     <% let ii = 1; %> 
     <% for (let tg of tgs) { %> 
-        <p> <%= ii %>. <%= tg.name %>  </p>
+        <p> <%= ii %>. <a href="/twcr/<%= tg._id %> "><%= tg.name %></a> </p>
         <% ii = ii + 1; %> 
     <% } %> 
 
