@@ -4,15 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/detail_styles.css">
     <title> <%= tg[0].name %>  </title>
 </head>
 <body>
     <h2> <%= tg[0].name %> </h2>
+    
+    <!-- create table row -->
+    <table>
+        <tr>
+            <td>Lon</td>
+            <td><%= tg[0].lon %></td>
+        </tr>
+
+        <tr>
+            <td>Lat</td>
+            <td><%= tg[0].lat %></td>
+        </tr>
+
+        <tr>
+            <td>Correlation</td>
+            <td><%= tg[0].correlation %></td>
+        </tr>
+
+        <tr>
+            <td>RMSE</td>
+            <td><%= tg[0].rmse %></td>
+        </tr>
+
+    </table>
+
+<!-- 
     <h4>lon: <%= tg[0].lon %> </h4>
     <h4>lat: <%= tg[0].lat %> </h4>
     <h4>Correlation: <%= tg[0].correlation %> </h4>
-    <h4>RMSE: <%= tg[0].rmse %> </h4>
-    
+    <h4>RMSE: <%= tg[0].rmse %> </h4> -->
+
+    <a href="/home">Home</a>
 </body>
 </html>
 

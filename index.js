@@ -42,13 +42,14 @@
     // route to view/filter tide gauges
     app.get('/twcr', async (req, res) => {
 
+        console.log(req.params);
         const { country } = req.query;
         console.log(country);
 
         // look up country name in tide gauge string
         const regex = new RegExp(country, 'i'); // i for case insensitive
         const tgs = await TideGauge.find({ name: {$regex: regex}});
-        console.log(tgs);
+        // console.log(tgs);
 
         if (tgs.length === 0){
             console.log("no tide gauges");
@@ -66,8 +67,10 @@
 
     // get details on each tide gauge
     app.get('/twcr/:id', async (req, res) => {
-        const { id } = req.params;
-        const tg = await TideGauge.find({ _id:id });
+        // const { tgID, cssLink } = req.params;
+        console.log(req.params);
+        const tg = await TideGauge.find({ _id : req.params.id });
+        console.log(tg);
         res.render('tgDetail', { tg })
     })
 

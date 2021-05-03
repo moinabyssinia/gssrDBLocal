@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tide Gauges</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <% if (country === undefined) { %> 
@@ -15,8 +15,12 @@
     <div class="heading">
         <h1> <%= country.toUpperCase() %>  Tide Gauges</h1>
     </div>
+
+    <a href = '/home'>Home</a>
     
-    <h3> <%= tgs.length %> tide gauges found  </h3>
+    <div class="num-tgs">
+        <h3> <%= tgs.length %> tide gauges found  </h3>
+    </div>
 
     <% let ii = 1; %> 
     <% for (let tg of tgs) { %> 
