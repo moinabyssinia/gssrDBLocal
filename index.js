@@ -11,19 +11,19 @@
    const methodOverride = require('method-override');
    
    // require model created in tideGauge.js
-   const TideGauge = require('./models/tideGauge');
+   const {TideGauge, Dmax} = require('./models/allModels');
    
    
    // connect to MongoDB - when connection fails try replacing local host 
    // with 127.0.0.1
-   mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
-       .then(() => {
-           console.log("mongo connection open")
-       })
-       .catch(err => {
-           console.log('oh no mongo connection error')
-           console.log(err)
-       })
+//    mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
+//        .then(() => {
+//            console.log("mongo connection open")
+//        })
+//        .catch(err => {
+//            console.log('oh no mongo connection error')
+//            console.log(err)
+//        })
 
 
     app.set('views', path.join(__dirname, 'views'));
@@ -67,7 +67,7 @@
                 console.log("no tide gauges");
                 res.send(`Sorry, GSSR 1.0 currently doesn't have tide gauges in ${country.toUpperCase()}`)
             }
-            
+
             console.log(tgs);
 
             res.render('allTGS', { tgs, country });
@@ -87,6 +87,16 @@
         const tg = await TideGauge.find({ _id : req.params.id });
         console.log(tg);
         res.render('tgDetail', { tg })
+    })
+
+    // get observed surge
+    app.get('/alltgs/:id/obs_surge', async (req, res) => {
+        const { id } = req.params;
+        const tg = await TideGauge.find({_id : id});
+        const tgName = tg[0].name;
+        console.log(tgName);
+        const tgDmax = await Dmax.tgName.find({});
+        console.log(tgDmax);
     })
 
     app.listen(4000, () => {
