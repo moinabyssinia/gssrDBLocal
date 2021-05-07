@@ -14,14 +14,10 @@ const tgSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    correlation: {
-        type: Number,
+    country: {
+        type: String,
         required: true,
     },
-    rmse: {
-        type: Number,
-        required: true,
-    }
 })
 
 // compile our model

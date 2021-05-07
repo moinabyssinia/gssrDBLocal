@@ -16,7 +16,7 @@
    
    // connect to MongoDB - when connection fails try replacing local host 
    // with 127.0.0.1
-   mongoose.connect('mongodb://localhost:27017/twcrVald', {useNewUrlParser: true, useUnifiedTopology: true})
+   mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
        .then(() => {
            console.log("mongo connection open")
        })
@@ -40,23 +40,38 @@
     })
 
     // route to view/filter tide gauges
-    app.get('/twcr', async (req, res) => {
+    app.get('/alltgs', async (req, res) => {
 
         console.log(req.params);
         const { country } = req.query;
         console.log(country);
 
         // look up country name in tide gauge string
-        const regex = new RegExp(country, 'i'); // i for case insensitive
-        const tgs = await TideGauge.find({ name: {$regex: regex}});
-        // console.log(tgs);
+        // const regex = new RegExp(country, 'i'); // i for case insensitive
 
-        if (tgs.length === 0){
-            console.log("no tide gauges");
-            res.send(`Sorry, GSSR 1.0 currently doesn't have tide gauges in ${country.toUpperCase()}`)
+        if(!country) {
+            const tgs = await TideGauge.find({}); // find all tgs 
+            res.render('allTGS', { tgs, country });
         }
 
-        res.render('allTGS', { tgs, country });
+        else {
+
+            //const tgs = await TideGauge.find({ name: {$regex: regex}});
+            const tgs = await TideGauge.find(
+                { 
+                    country : { $regex: new RegExp(country, "i") } 
+                });
+            
+            // no tide gauges found?
+            if (tgs.length === 0){
+                console.log("no tide gauges");
+                res.send(`Sorry, GSSR 1.0 currently doesn't have tide gauges in ${country.toUpperCase()}`)
+            }
+            
+            console.log(tgs);
+
+            res.render('allTGS', { tgs, country });
+        }
     })
 
     // serve form to filter tide gauges per country
@@ -66,7 +81,7 @@
 
 
     // get details on each tide gauge
-    app.get('/twcr/:id', async (req, res) => {
+    app.get('/alltgs/:id', async (req, res) => {
         // const { tgID, cssLink } = req.params;
         console.log(req.params);
         const tg = await TideGauge.find({ _id : req.params.id });
