@@ -94,9 +94,9 @@
         const { id } = req.params;
         const tg = await TideGauge.find({_id : id});
         const tgName = tg[0].name;
-        console.log(tgName);
-        const tgDmax = await Dmax.tgName.find({});
-        console.log(tgDmax);
+        console.log(`tide gauge name is: ${tgName}`);
+        const tgDmax = await Dmax.find({});
+        res.send(tgDmax);
     })
 
     app.listen(4000, () => {

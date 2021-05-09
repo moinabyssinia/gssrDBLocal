@@ -44,7 +44,9 @@ const dmaxSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-})
+},
+    {collection : 'dmax'}
+)
 
 // compile our model
 const TideGauge = tgsConnection.model('TideGauge', tgSchema);
