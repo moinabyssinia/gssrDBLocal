@@ -16,14 +16,14 @@
    
    // connect to MongoDB - when connection fails try replacing local host 
    // with 127.0.0.1
-//    mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
-//        .then(() => {
-//            console.log("mongo connection open")
-//        })
-//        .catch(err => {
-//            console.log('oh no mongo connection error')
-//            console.log(err)
-//        })
+   mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
+       .then(() => {
+           console.log("mongo connection open")
+       })
+       .catch(err => {
+           console.log('oh no mongo connection error')
+           console.log(err)
+       })
 
 
     app.set('views', path.join(__dirname, 'views'));
