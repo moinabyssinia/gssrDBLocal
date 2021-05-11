@@ -16,14 +16,14 @@
    
    // connect to MongoDB - when connection fails try replacing local host 
    // with 127.0.0.1
-   mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
-       .then(() => {
-           console.log("mongo connection open")
-       })
-       .catch(err => {
-           console.log('oh no mongo connection error')
-           console.log(err)
-       })
+//    mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
+//        .then(() => {
+//            console.log("mongo connection open")
+//        })
+//        .catch(err => {
+//            console.log('oh no mongo connection error')
+//            console.log(err)
+//        })
 
 
     app.set('views', path.join(__dirname, 'views'));
@@ -95,9 +95,31 @@
         const tg = await TideGauge.find({_id : id});
         const tgName = tg[0].name;
         console.log(`tide gauge name is: ${tgName}`);
-        const tgDmax = await Dmax.find({});
-        res.send(tgDmax);
+        
+        // connect to the dmax db
+        mongoose.connect('mongodb://localhost:27017/dailyMaxSurge',    {useNewUrlParser: true, useUnifiedTopology: true})
+        .then(() => {
+            console.log("mongo connection open")
+            // assuming it connects 
+            mongoose.connection.db.collection(tgName, function (err, collection) {
+            // console.log(collection);
+            collection.find({}).toArray(function(err, data){
+                // console.log(data); // it will print your collection data
+                const timeSeries = data;
+                res.send(timeSeries);
+                // console.log(timeSeries);
+                // res.send(data);
+            });
+       });
+        })
+        .catch(err => {
+            console.log('oh no mongo connection error')
+            console.log(err)
+        })
+
+
     })
+
 
     app.listen(4000, () => {
         console.log("app is listening on port 4000");
