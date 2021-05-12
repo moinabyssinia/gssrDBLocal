@@ -99,25 +99,21 @@
         // connect to the dmax db
         mongoose.connect('mongodb://localhost:27017/dailyMaxSurge',    {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => {
-            console.log("mongo connection open")
-            // assuming it connects 
+            console.log("connected to dailyMaxSurge")
+
             mongoose.connection.db.collection(tgName, function (err, collection) {
-            // console.log(collection);
-            collection.find({}).toArray(function(err, data){
+                collection.find({}).toArray(function(err, data){
                 // console.log(data); // it will print your collection data
                 const timeSeries = data;
                 res.send(timeSeries);
-                // console.log(timeSeries);
-                // res.send(data);
+                mongoose.connection.close();
             });
        });
         })
         .catch(err => {
-            console.log('oh no mongo connection error')
+            console.log('unable to connect to dailyMaxSurge')
             console.log(err)
         })
-
-
     })
 
 

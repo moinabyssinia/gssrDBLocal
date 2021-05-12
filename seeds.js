@@ -5330,7 +5330,7 @@ const seedDB = async () => {
 
 seedDB()
 .then (() => {
-  monggose.connection.close()
+  mongoose.connection.close()
 })
 
 
