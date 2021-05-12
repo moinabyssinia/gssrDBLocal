@@ -103,9 +103,9 @@
 
             mongoose.connection.db.collection(tgName, function (err, collection) {
                 collection.find({}).toArray(function(err, data){
-                // console.log(data); // it will print your collection data
+                console.log(data); // it will print your collection data
                 const timeSeries = data;
-                res.send(timeSeries);
+                res.render('obsSurge', {timeSeries, tgName});
                 mongoose.connection.close();
             });
        });

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/detail_styles.css">
+    <title> <%= tgName %>  </title>
+</head>
+<body>
+    
+    <h1><%= tgName %> </h1>
+
+    <!-- insert table -->
+    <table>
+        <tr>
+            <td> ID  </td>
+            <td> Date  </td>
+            <td> Surge(m)  </td>
+        </tr>
+
+        <% for (let ii of timeSeries) { %> 
+            <tr>
+                <td> <%= ii._id %>  </td>
+                <td> <%= ii.date %>  </td>
+                <td> <%= ii.surge %>  </td>
+            </tr>
+        <% } %> 
+    </table>
+
+
+</body>
+</html>
