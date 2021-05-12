@@ -102,7 +102,8 @@
             console.log("connected to dailyMaxSurge")
 
             mongoose.connection.db.collection(tgName, function (err, collection) {
-                collection.find({}).toArray(function(err, data){
+                // sort the collection with date - date : 1 (ascending)
+                collection.find({}).sort({date : 1}).toArray(function(err, data){
                 console.log(data); // it will print your collection data
                 const timeSeries = data;
                 res.render('obsSurge', {timeSeries, tgName});
