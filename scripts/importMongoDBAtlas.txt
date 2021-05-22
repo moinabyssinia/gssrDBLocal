@@ -1,0 +1,26 @@
+
+// individual collection
+-------------------------
+
+mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@cluster0.6qzrh.mongodb.net/SurgeDB?retryWrites=true&w=majority" 
+--collection dMaxSurge --drop --type=csv --fields=_id,date,surge,ymd,lon,lat --file cuxhaven_germany.csv 
+
+
+// maybe multiple collections
+------------------------------ 
+
+for i in *.csv; do mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@cluster0.6qzrh.mongodb.net/SurgeDB?retryWrites=true&w=majority" 
+-c ${i%.*} --drop --type=csv --fields=_id,date,surge,ymd,lon,lat --file $i ; done
+
+
+// maybe multiple collections - importing the second half of gssrDB
+-------------------------------------------------------------------
+
+for i in *.csv; do mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@cluster0.hwq5i.mongodb.net/SurgeDB2?retryWrites=true&w=majority" 
+-c ${i%.*} --drop --type=csv --fields=_id,date,surge,ymd,lon,lat --file $i ; done
+
+
+// connecting to gssrCountries
+
+mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@cluster0.d2ywb.mongodb.net/SurgeDB3?retryWrites=true&w=majority" 
+--collection georefData --drop --type=csv --fields=_id,name,lon,lat,country --file allTgsData.csv

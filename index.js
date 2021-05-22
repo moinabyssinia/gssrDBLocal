@@ -1,11 +1,12 @@
 /* build a full CRUD application with a UI
    that is connected with Mongo */
 
+   require("dotenv").config({path: "config.env"});
    const express = require('express');
    const app = express();
    const path = require('path');
    const mongoose = require('mongoose');
-   
+
 
    // use this to override post with put
    const methodOverride = require('method-override');
@@ -16,14 +17,14 @@
    
    // connect to MongoDB - when connection fails try replacing local host 
    // with 127.0.0.1
-//    mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
-//        .then(() => {
-//            console.log("mongo connection open")
-//        })
-//        .catch(err => {
-//            console.log('oh no mongo connection error')
-//            console.log(err)
-//        })
+   mongoose.connect('mongodb://localhost:27017/allTgs', {useNewUrlParser: true, useUnifiedTopology: true})
+       .then(() => {
+           console.log("mongo connection open")
+       })
+       .catch(err => {
+           console.log('oh no mongo connection error')
+           console.log(err)
+       })
 
 
     app.set('views', path.join(__dirname, 'views'));
@@ -97,6 +98,10 @@
         console.log(`tide gauge name is: ${tgName}`);
         
         // connect to the dmax db
+
+        // first close existing connection
+        mongoose.connection.close();
+
         mongoose.connect('mongodb://localhost:27017/dailyMaxSurge',    {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => {
             console.log("connected to dailyMaxSurge")
