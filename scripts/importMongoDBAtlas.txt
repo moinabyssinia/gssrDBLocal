@@ -23,4 +23,12 @@ for i in *.csv; do mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@
 // connecting to gssrCountries
 
 mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@cluster0.d2ywb.mongodb.net/SurgeDB3?retryWrites=true&w=majority" 
---collection georefData --drop --type=csv --fields=_id,name,lon,lat,country --file allTgsData.csv
+--collection georefData --drop --type=csv --fields=name,lon,lat,country --file allTgsData.csv
+
+
+// maybe multiple collections - importing the first half of gssrDB
+-------------------------------------------------------------------
+
+for i in *.csv; do mongoimport --uri "mongodb+srv://michaelgtadesse:M_chael2015@cluster0.9cbia.mongodb.net/SurgeDB1retryWrites=true&w=majority" 
+-c ${i%.*} --type=csv --fields=_id,date,surge,ymd,lon,lat --file $i ; done
+
